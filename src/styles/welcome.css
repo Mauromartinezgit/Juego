@@ -1,0 +1,128 @@
+/* ===============================
+    LOCAL – WELCOME
+================================ */
+.page-welcome {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.page-welcome * {
+    box-sizing: border-box;
+}
+
+/* ===============================
+   CONTENEDOR PRINCIPAL
+================================ */
+.page-welcome .container {
+    width: 100%;
+    max-width: 375px;
+    min-height: 667px;
+    margin: 0 auto;
+    /* Aumentado para garantizar espacio suficiente debajo del contenido
+         y evitar que las manos fijen encima del botón */
+    padding: 0 12px 300px !important;
+    /* espacio para las manos */
+    position: relative;
+}
+
+/* ===============================
+   TÍTULO
+================================ */
+.page-welcome .container-title {
+    width: 308px;
+    height: 219px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.page-welcome .title {
+    color: #009048;
+    font-size: 50px;
+    margin: 0;
+    line-height: 1.1;
+}
+
+/* ===============================
+   BOTÓN
+================================ */
+.page-welcome .container-button {
+    width: 100%;
+    max-width: 322px;
+    display: flex;
+    justify-content: center;
+    /* Reducido para colocar el botón más arriba en todas las pantallas */
+    margin: 24px auto 0;
+    position: relative;
+    /* crear contexto de apilamiento */
+    z-index: 99999 !important;
+    /* asegurar de forma definitiva que el botón quede por encima */
+}
+
+
+.page-welcome .button {
+    background-color: #006CFC;
+    color: #ffffff;
+    border: 8px solid blue;
+    width: 100%;
+    max-width: 322px;
+    padding: 14px 0;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ===============================
+   MANOS – FIJAS ABAJO
+================================ */
+.page-welcome .container-hands {
+    position: fixed !important;
+    bottom: 6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    display: flex;
+    gap: 8px;
+    /* 👈 juntas */
+    align-items: flex-end;
+    /* Mantener las manos por debajo del botón */
+    z-index: 1 !important;
+    pointer-events: none;
+}
+
+/* Forzar que el botón visualmente esté por encima de cualquier imagen fija */
+.page-welcome .container-button .button {
+    position: relative;
+    z-index: 100000 !important;
+}
+
+.page-welcome .img-hands {
+    width: 48px;
+    height: auto;
+    max-height: 48px;
+    object-fit: contain;
+}
+
+/* ===============================
+   TODOS LOS DISPOSITIVOS
+   (misma apariencia)
+================================ */
+@media (min-width: 600px) {
+    .page-welcome .container {
+        padding-bottom: 120px;
+    }
+
+    .page-welcome .title {
+        color: #009048;
+        font-size: 50px;
+        margin: 0;
+        line-height: 1.1;
+    }
+}

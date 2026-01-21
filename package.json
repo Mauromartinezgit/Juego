@@ -1,0 +1,20 @@
+{
+  "name": "juego",
+  "version": "1.0.0",
+  "description": "Juego de Piedra, Papel o Tijera",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build --public-url ./",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "keywords": ["game", "rock-paper-scissors"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "gh-pages": "^6.3.0",
+    "parcel": "^2.16.1",
+    "typescript": "^5.9.3"
+  }
+}

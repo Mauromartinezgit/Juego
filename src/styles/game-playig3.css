@@ -1,0 +1,178 @@
+/* Estilos para game-playing3: centrar img3 y colocar las manos al fondo */
+
+/* Contenedor principal (mobile-first) */
+.page-game-playing .container,
+.game-playing-page .container {
+	width: 100%;
+	max-width: 375px;
+	margin: 0 auto;
+	box-sizing: border-box;
+	padding: 0 12px;
+}
+
+/* Contador de tiempo */
+.countdown-display {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	z-index: 30;
+}
+
+.countdown-number {
+	font-size: 8rem;
+	font-weight: 900;
+	color: #3b82f6;
+	text-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+	animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+	0%, 100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.1);
+		opacity: 0.8;
+	}
+}
+
+/* Contenedores de manos (se colocan pegadas al fondo) */
+.page-game-playing .container-hands,
+.page-game-playing .hand-icons,
+.game-playing-page .container-hands {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	box-sizing: border-box;
+}
+
+/* Imagen individual dentro del contenedor (manos) */
+.page-game-playing .img-hands,
+.page-game-playing .hand-icon,
+.page-game-playing .image-wrapper img,
+.game-playing-page .img-hands {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+	display: block;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.page-game-playing .img-hands:hover,
+.game-playing-page .img-hands:hover {
+	transform: scale(1.1);
+}
+
+.page-game-playing .img-hands:active,
+.game-playing-page .img-hands:active {
+	transform: scale(0.95);
+}
+
+/* img3: debe estar centrada en la página y medir 243x243 */
+.page-game-playing .img3,
+.page-game-playing .image-wrapper .img3 {
+	width: 243px;
+	height: 243px;
+	object-fit: contain;
+	display: block;
+	margin: 0 auto;
+	z-index: 20;
+}
+
+/* Mantener imágenes centradas como bloque dentro de su div */
+.page-game-playing .image-wrapper img {
+	margin: 0 auto;
+}
+
+/* Mobile-first: colocar las manos pegadas al fondo y centrar horizontalmente */
+.page-game-playing .container-hands,
+.page-game-playing .hand-icons,
+.game-playing-page .container-hands {
+	position: fixed;
+	bottom: 12px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 5;
+}
+
+/* Centrar img3 en el centro del viewport */
+.page-game-playing .img3 {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	pointer-events: auto;
+}
+
+/* Ajustes de media queries */
+@media (min-width: 600px) {
+	.page-game-playing .container,
+	.game-playing-page .container {
+		padding: 0;
+	}
+
+	.page-game-playing .container-hands,
+	.page-game-playing .hand-icons,
+	.page-game-playing .image-wrapper,
+	.game-playing-page .container-hands {
+		gap: 20px;
+	}
+	
+	.countdown-number {
+		font-size: 10rem;
+	}
+}
+
+@media (min-width: 900px) {
+	/* Forzar que desktop luzca igual que mobile: manos pegadas al fondo y img3 centrada */
+	.page-game-playing .container,
+	.game-playing-page .container {
+		max-width: 900px;
+		padding: 0 24px;
+	}
+
+	/* Manos: pegadas al fondo y centradas horizontalmente */
+	.page-game-playing .container-hands,
+	.page-game-playing .hand-icons,
+	.game-playing-page .container-hands {
+		position: fixed;
+		bottom: 12px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 5;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+	}
+
+	/* Tamaños idénticos a mobile */
+	.page-game-playing .img-hands,
+	.page-game-playing .hand-icon,
+	.page-game-playing .image-wrapper img,
+	.game-playing-page .img-hands {
+		width: 80px;
+		height: 80px;
+	}
+
+	/* img3 grande y centrada en el viewport */
+	.page-game-playing .img3,
+	.page-game-playing .image-wrapper .img3 {
+		width: 243px;
+		height: 243px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 20;
+	}
+	
+	.countdown-number {
+		font-size: 12rem;
+	}
+}

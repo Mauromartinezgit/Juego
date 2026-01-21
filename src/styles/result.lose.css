@@ -1,0 +1,268 @@
+/* result.css - Pantallas de Victoria y Derrota */
+
+.result-page {
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-page {
+  background: linear-gradient(180deg, #d4af37 0%, #f4e4a6 50%, #e6d5a8 100%);
+}
+
+.lose-page {
+  background: linear-gradient(180deg, #7c2d3a 0%, #c084a1 50%, #d4a5b8 100%);
+}
+
+/* Header "Resultado" */
+.result-header {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin-bottom: var(--spacing-lg);
+}
+
+.result-header-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Container principal */
+.result-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Estrella con texto */
+.result-star {
+  width: 320px;
+  height: 320px;
+  margin: 0 auto var(--spacing-xl);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: starPulse 2s ease-in-out infinite;
+}
+
+.star-shape {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #10b981 0%, #6ee7b7 100%);
+  clip-path: polygon(
+    50% 0%, 
+    61% 35%, 
+    98% 35%, 
+    68% 57%, 
+    79% 91%, 
+    50% 70%, 
+    21% 91%, 
+    32% 57%, 
+    2% 35%, 
+    39% 35%
+  );
+  border: 6px solid #000;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 -50px 80px rgba(0, 0, 0, 0.2);
+}
+
+.lose-page .star-shape {
+  background: linear-gradient(135deg, #ef4444 0%, #fca5a5 100%);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 -50px 80px rgba(0, 0, 0, 0.2);
+}
+
+.result-star-text {
+  position: absolute;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+/* Tarjeta de Score */
+.score-card {
+  background: #f9fafb;
+  border: 5px solid #1f2937;
+  border-radius: 1rem;
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.score-card-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: var(--spacing-lg);
+  text-transform: capitalize;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  padding: var(--spacing-xs) 0;
+}
+
+.score-label {
+  text-align: left;
+}
+
+.score-number {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+/* Botón de Volver a Jugar */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.result-actions .btn {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.result-actions .btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+}
+
+/* Animaciones */
+@keyframes starPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.03) rotate(1deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .result-star {
+    width: 260px;
+    height: 260px;
+  }
+
+  .result-star-text {
+    font-size: 2.25rem;
+  }
+
+  .star-shape {
+    border: 5px solid #000;
+  }
+
+  .score-card {
+    padding: var(--spacing-lg);
+  }
+
+  .score-card-title {
+    font-size: 1.75rem;
+  }
+
+  .score-row {
+    font-size: 1.25rem;
+  }
+
+  .score-number {
+    font-size: 1.5rem;
+  }
+
+  .result-actions .btn {
+    font-size: 1.125rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-header-title {
+    font-size: 1.25rem;
+  }
+
+  .result-star {
+    width: 220px;
+    height: 220px;
+  }
+
+  .result-star-text {
+    font-size: 1.875rem;
+  }
+
+  .star-shape {
+    border: 4px solid #000;
+  }
+
+  .score-card {
+    padding: var(--spacing-md);
+    border: 4px solid #1f2937;
+  }
+
+  .score-card-title {
+    font-size: 1.5rem;
+  }
+
+  .score-row {
+    font-size: 1.125rem;
+  }
+
+  .score-number {
+    font-size: 1.25rem;
+  }
+
+  .result-actions .btn {
+    font-size: 1rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
