@@ -5,6 +5,7 @@
 
 import { PageController } from '../types';
 import { Button } from '../components/Button';
+import { state } from '../state';
 
 /**
  * Clase WelcomePage
@@ -22,10 +23,6 @@ export class WelcomePage implements PageController {
 
     /**
      * Establecer el contenido HTML de la página
-     * Incluye:
-     * - Título del juego
-     * - Botón "Empezar" que navega a las instrucciones
-     * - Imágenes decorativas de las manos (piedra, papel, tijera)
      */
     app.innerHTML = `
 <div class="page-welcome">
@@ -34,7 +31,10 @@ export class WelcomePage implements PageController {
         <h1 class="title">Piedra,<br>Papel o <br>Tijera</h1>
         </div>
         <div class="container-button">
-        <button class="button" data-page="instructions">Empezar</button>
+        <button class="button" data-page="empezar" id="new-game">Nuevo Juego</button>
+        </div>
+        <div class="container-button">
+        <button class="button" data-page="empezar" id="join-room">Ingresar a una sala</button>
         </div>
         <div class="container-hands">
             <img src="https://i.postimg.cc/RVBNKXfK/tijera.png" class="img-hands" alt="tijera">
@@ -45,10 +45,16 @@ export class WelcomePage implements PageController {
 </div>
     `;
 
-    // Mensaje de confirmación en consola
-    console.log('✅ WelcomePage rendered');
+    // Configurar el estado según el botón presionado
+    app.querySelector('#new-game')?.addEventListener('click', () => {
+      state.setIsHost(true);
+    });
 
-    // Configurar los botones de navegación (el botón "Empezar")
+    app.querySelector('#join-room')?.addEventListener('click', () => {
+      state.setIsHost(false);
+    });
+
+    // Configurar los botones de navegación
     Button.setupNavigationButtons();
   }
 }

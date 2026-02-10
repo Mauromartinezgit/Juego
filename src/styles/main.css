@@ -7,6 +7,9 @@
 @import './game-playin2.css';
 @import './result.win.css';
 @import './result.lose.css';
+@import './share-room.css';
+@import './multiplayer-instructions.css';
+@import './waiting-player.css';
 
 /* Reset básico */
 * {

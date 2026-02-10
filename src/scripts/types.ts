@@ -8,6 +8,10 @@ export type RoundResult = 'win' | 'lose' | 'draw';
 export type Page =
   | 'welcome'
   | 'instructions'
+  | 'empezar'
+  | 'share-room'
+  | 'multiplayer-instructions'
+  | 'waiting-player'
   | 'game-playing3'
   | 'game-playing2'
   | 'game-playing1'
@@ -19,6 +23,10 @@ export type Page =
 export interface GameState {
   playerScore: number;
   computerScore: number;
+  playerName?: string;
+  opponentName?: string;
+  roomCode?: string;
+  isHost?: boolean;
   currentPage: Page;
   playerChoice: Choice | null;
   computerChoice: Choice | null;

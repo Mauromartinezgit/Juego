@@ -57,6 +57,26 @@ class Router {
           const instructionsMod = await import('./pages/Instructions');
           PageController = instructionsMod.InstructionsPage;
           break;
+        case 'empezar':
+          // Página para ingresar nombre y empezar
+          const empezarMod = await import('./pages/Empezar');
+          PageController = empezarMod.EmpezarPage;
+          break;
+        case 'share-room':
+          // Página para compartir el código de la sala
+          const shareRoomMod = await import('./pages/ShareRoomPage');
+          PageController = shareRoomMod.ShareRoomPage;
+          break;
+        case 'multiplayer-instructions':
+          // Instrucciones de la partida multijugador
+          const multiInstMod = await import('./pages/MultiplayerInstructionsPage');
+          PageController = multiInstMod.MultiplayerInstructionsPage;
+          break;
+        case 'waiting-player':
+          // Pantalla de espera del contrincante
+          const waitingMod = await import('./pages/WaitingPlayerPage');
+          PageController = waitingMod.WaitingPlayerPage;
+          break;
         case 'game-playing3':
           // Página de countdown: muestra "3"
           const playing3Mod = await import('./pages/game-playing3');
@@ -64,7 +84,7 @@ class Router {
           break;
         case 'game-playing2':
           // Página de countdown: muestra "2"
-          const playing2Mod = await import('./pages/game-playing2'); 
+          const playing2Mod = await import('./pages/game-playing2');
           PageController = playing2Mod.GamePlayingPage2;
           break;
         case 'game-playing1':

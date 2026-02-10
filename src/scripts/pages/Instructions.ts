@@ -19,8 +19,9 @@ export class InstructionsPage implements PageController {
         <h1 class="title">Presioná jugar <br>
 y elegí: piedra,<br> papel o tijera  <br>antes de que pasen los 3 segundos.</h1>
         </div>
-        <div class="container-button">
-        <button class="button" data-page="game-playing3">¡Jugar!</button>
+        <div class="container-button" style="display: flex; flex-direction: column;">
+            <input class="input-code" type="text" placeholder="código" id="room-code-input">
+            <button class="button" id="join-btn">Ingresar a la sala</button>
         </div>
         <div class="container-hands">
             <img src="https://i.postimg.cc/RVBNKXfK/tijera.png" class="img-hands" alt="tijera">
@@ -31,21 +32,21 @@ y elegí: piedra,<br> papel o tijera  <br>antes de que pasen los 3 segundos.</h1
 </div>
     `;
 
-    Button.setupNavigationButtons();
+    const joinBtn = app.querySelector('#join-btn');
+    const codeInput = app.querySelector('#room-code-input') as HTMLInputElement;
 
-    // Fallback: attach a direct click listener to the specific play button
-    const playBtn = document.querySelector('.page-instructions [data-page="game-playing3"]') as HTMLElement | null;
-    console.debug('Instructions: playBtn found?', !!playBtn, playBtn);
-    if (playBtn) {
-      if (!(playBtn as any).__play_fallback_attached) {
-        (playBtn as any).__play_fallback_attached = true;
-        console.debug('Instructions: attaching fallback listener to playBtn');
-        playBtn.addEventListener('click', (ev) => {
-          ev.preventDefault();
-          console.debug('[Fallback] play button clicked - navigating to game-playing3');
-          void router.navigate('game-playing3');
-        });
+    joinBtn?.addEventListener('click', () => {
+      const code = codeInput.value.trim();
+      if (!code) {
+        alert('Por favor ingresa un código de sala');
+        return;
       }
-    }
+
+      state.setRoomCode(code);
+      console.debug('Uniendo a sala:', code);
+      void router.navigate('multiplayer-instructions');
+    });
+
+    Button.setupNavigationButtons();
   }
 }

@@ -9,16 +9,17 @@ body {
 
 }
 
-.container{
+.container {
     width: 100%;
-    max-width: 375px; /* diseño móvil primero */
+    max-width: 375px;
+    /* diseño móvil primero */
     min-height: 667px;
     margin: 0 auto;
     box-sizing: border-box;
     padding: 0 12px;
 }
 
-.container-title{
+.container-title {
     width: 308px;
     height: 219px;
     display: flex;
@@ -33,18 +34,21 @@ body {
     color: black;
     /* tamaño responsive reducido para evitar solapamiento con el botón */
     font-size: clamp(16px, 4.5vw, 28px);
-    margin: 0 0 16px 0; /* espacio debajo del título */
+    margin: 0 0 16px 0;
+    /* espacio debajo del título */
     line-height: 1.08;
     text-align: center;
 }
- .container-button {
+
+.container-button {
     width: 100%;
     max-width: 322px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    padding-top: 56px; /* aumentar separación entre título y botón */
+    padding-top: 56px;
+    /* aumentar separación entre título y botón */
     box-sizing: border-box;
 }
 
@@ -53,28 +57,59 @@ body {
     color: #ffffff;
     border: 10px solid blue;
     width: 100%;
-    max-width: 322px; /* mantiene el ancho máximo solicitado */
-    box-sizing: border-box; /* incluye borde en las dimensiones */
+    max-width: 322px;
+    /* mantiene el ancho máximo solicitado */
+    box-sizing: border-box;
+    /* incluye borde en las dimensiones */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 0; /* alto flexible, más accesible */
+    padding: 12px 0;
+    /* alto flexible, más accesible */
     font-size: clamp(16px, 3.5vw, 18px);
     border-radius: 8px;
     cursor: pointer;
 }
 
+.input-code {
+    width: 100%;
+    max-width: 322px;
+    height: 55px;
+    border: 10px solid #182460;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 18px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.input-code::placeholder {
+    color: #d9d9d9;
+}
+
+.label-input {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    display: block;
+}
+
 /* Contenedor para las tres imágenes de manos fijado en la parte inferior del viewport */
 .container-hands {
     position: fixed;
-    bottom: 20px; /* distancia desde la parte inferior del viewport */
+    bottom: 20px;
+    /* distancia desde la parte inferior del viewport */
     left: 50%;
-    transform: translateX(-50%); /* centrar horizontalmente en el viewport */
+    transform: translateX(-50%);
+    /* centrar horizontalmente en el viewport */
     display: flex;
     gap: 20px;
     align-items: flex-end;
     z-index: 50;
-    pointer-events: none; /* dejar pasar los clics; cambiar a "auto" si quieres que el contenedor reciba clics */
+    pointer-events: none;
+    /* dejar pasar los clics; cambiar a "auto" si quieres que el contenedor reciba clics */
 }
 
 .img-hands {
@@ -82,30 +117,58 @@ body {
     width: clamp(48px, 10vw, 80px);
     height: clamp(48px, 10vw, 80px);
     object-fit: contain;
-    pointer-events: auto; /* permitir interacción en las propias imágenes */
+    pointer-events: auto;
+    /* permitir interacción en las propias imágenes */
 }
 
 /* Ajustes adicionales para pantallas más grandes */
 @media (min-width: 600px) {
-    .container{ padding: 0; }
-    .container-title{ padding-top: 140px; }
-    .container-hands{ bottom: 24px; gap: 24px; }
+    .container {
+        padding: 0;
+    }
+
+    .container-title {
+        padding-top: 140px;
+    }
+
+    .container-hands {
+        bottom: 24px;
+        gap: 24px;
+    }
 }
 
 @media (min-width: 900px) {
+
     /* Forzar en escritorio la misma presentación que en móvil */
-    .container{
-        max-width: 900px; /* layout más ancho permitido, pero conservar espaciado móvil */
+    .container {
+        max-width: 900px;
+        /* layout más ancho permitido, pero conservar espaciado móvil */
         padding: 0 24px;
     }
+
     /* Usar los mismos espaciados que en móvil para evitar solapamientos */
-    .container-title{ padding-top: 70px; }
+    .container-title {
+        padding-top: 70px;
+    }
+
     /* En desktop subir el botón en la página de instrucciones */
-    .page-instructions .container-title { padding-top: 40px; }
-    .page-instructions .container-button { margin: 12px auto 0; }
-    .title{ font-size: clamp(20px, 8vw, 34px); }
-    .container-button{ padding-top: 20px; }
-    .button{
+    .page-instructions .container-title {
+        padding-top: 40px;
+    }
+
+    .page-instructions .container-button {
+        margin: 12px auto 0;
+    }
+
+    .title {
+        font-size: clamp(20px, 8vw, 34px);
+    }
+
+    .container-button {
+        padding-top: 20px;
+    }
+
+    .button {
         font-size: 18px;
         max-width: 322px;
         width: 100%;
@@ -113,27 +176,36 @@ body {
         padding: 14px 0;
         border-width: 8px;
     }
-    .img-hands{ width: clamp(40px, 6vw, 64px); height: auto; }
-    .container-hands{ bottom: 8px; gap: 12px; }
+
+    .img-hands {
+        width: clamp(40px, 6vw, 64px);
+        height: auto;
+    }
+
+    .container-hands {
+        bottom: 8px;
+        gap: 12px;
+    }
 }
 
 /* Ajustes específicos para móviles (mejora UX y accesibilidad) */
 @media (max-width: 480px) {
+
     /* Contenedor adaptado a pantalla pequeña */
-    .container{
+    .container {
         padding: 0 14px;
         min-height: 640px;
     }
 
     /* Reducir espacio superior del título para pantallas pequeñas */
-    .container-title{
+    .container-title {
         padding-top: 70px;
         width: auto;
         height: auto;
     }
 
     /* Título más compacto y legible en móvil */
-    .title{
+    .title {
         size: 20px;
         line-height: 1.1;
         padding: 0 6px;
@@ -141,32 +213,35 @@ body {
     }
 
     /* Menos separación pero botón accesible */
-    .container-button{
+    .container-button {
         padding-top: 20px;
         max-width: 100%;
     }
 
     /* Botón ocupa ancho disponible, borde ligeramente menor para no reducir espacio útil */
-    .button{
+    .button {
         max-width: 100%;
         padding: 14px 0;
         font-size: 18px;
-        border-width: 8px; /* mantener estilo pero reducir ligeramente */
+        border-width: 8px;
+        /* mantener estilo pero reducir ligeramente */
     }
 
     /* Manos más pequeñas y pegadas al borde inferior en móvil */
-    .container-hands{
+    .container-hands {
         bottom: 8px;
         gap: 12px;
     }
 
-    .img-hands{
+    .img-hands {
         width: clamp(40px, 14vw, 64px);
         height: auto;
     }
 
     /* Evitar que el bloque fijo tape controles táctiles importantes */
-    .container-hands{ pointer-events: auto; }
+    .container-hands {
+        pointer-events: auto;
+    }
 }
 
 /* ========================== */
@@ -179,7 +254,8 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: calc(100vh - 0px);
-    padding: 20px 12px 120px; /* leave room for fixed hands */
+    padding: 20px 12px 120px;
+    /* leave room for fixed hands */
 }
 
 .page-instructions .spacer {
@@ -210,7 +286,13 @@ body {
         width: 56px;
         max-height: 56px;
     }
+
     /* Reduce title top and ensure button sits visually centered between title and hands */
-    .page-instructions .container-title { padding-top: 40px; }
-    .page-instructions .container-button { margin: 12px auto 0; }
+    .page-instructions .container-title {
+        padding-top: 40px;
+    }
+
+    .page-instructions .container-button {
+        margin: 12px auto 0;
+    }
 }

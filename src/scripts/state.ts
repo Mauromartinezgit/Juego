@@ -133,6 +133,22 @@ class State {
     });
   }
 
+  setPlayerName(name: string): void {
+    this.setState({ playerName: name });
+  }
+
+  setRoomCode(code: string): void {
+    this.setState({ roomCode: code });
+  }
+
+  setIsHost(isHost: boolean): void {
+    this.setState({ isHost });
+  }
+
+  setOpponentName(name: string): void {
+    this.setState({ opponentName: name });
+  }
+
   /**
    * Verificar si alguien ganó el juego
    * @returns 'player' si ganó el jugador, 'computer' si ganó la computadora, null si nadie ganó aún

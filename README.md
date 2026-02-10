@@ -7,6 +7,7 @@ Juego interactivo de Piedra, Papel o Tijera desarrollado con TypeScript, HTML y 
 [**Jugar ahora →**] git@github.com:Mauromartinezgit/Juego.git
 
 
+
 ## 🎯 Características
 
 - ✅ Contador de 3 segundos para elegir
