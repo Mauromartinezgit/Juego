@@ -5,6 +5,9 @@
 
 import { GameState, Choice, RoundResult, Page } from './types';
 
+// Configuración del backend
+const API_URL = 'https://juego-backend-5uex.onrender.com';
+
 /**
  * Clase State
  * Almacena y gestiona el estado global del juego
@@ -164,6 +167,147 @@ class State {
     }
     // Si nadie llegó a 5 puntos, el juego continúa
     return null;
+  }
+
+  // ==========================================
+  // MÉTODOS PARA CONECTAR CON EL BACKEND
+  // ==========================================
+
+  /**
+   * Crear una nueva sala de juego multijugador
+   * @param playerName - Nombre del jugador que crea la sala
+   * @returns Código de la sala creada
+   */
+  async createRoom(playerName: string): Promise<string> {
+    try {
+      const response = await fetch(`${API_URL}/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: playerName }),
+      });
+
+      const data = await response.json();
+      
+      // Guardar información en el estado
+      this.setPlayerName(playerName);
+      this.setRoomCode(data.roomId);
+      this.setIsHost(true);
+      
+      return data.roomId;
+    } catch (error) {
+      console.error('Error al crear la sala:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Unirse a una sala existente
+   * @param roomCode - Código de la sala
+   * @param playerName - Nombre del jugador que se une
+   */
+  async joinRoom(roomCode: string, playerName: string): Promise<void> {
+    try {
+      const response = await fetch(`${API_URL}/rooms/${roomCode}/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: playerName }),
+      });
+
+      const data = await response.json();
+      
+      // Guardar información en el estado
+      this.setPlayerName(playerName);
+      this.setRoomCode(roomCode);
+      this.setIsHost(false);
+      
+    } catch (error) {
+      console.error('Error al unirse a la sala:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Enviar la jugada del jugador al backend
+   * @param choice - Elección del jugador (piedra, papel o tijera)
+   */
+  async sendPlay(choice: Choice): Promise<void> {
+    try {
+      const { roomCode, playerName } = this.state;
+      
+      const response = await fetch(`${API_URL}/rooms/${roomCode}/play`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          playerName,
+          play: choice 
+        }),
+      });
+
+      const data = await response.json();
+      
+    } catch (error) {
+      console.error('Error al enviar la jugada:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtener el estado actual de la sala
+   * @returns Estado de la sala
+   */
+  async getRoomState(): Promise<any> {
+    try {
+      const { roomCode } = this.state;
+      
+      const response = await fetch(`${API_URL}/rooms/${roomCode}`);
+      const data = await response.json();
+      
+      return data;
+    } catch (error) {
+      console.error('Error al obtener el estado de la sala:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Hacer petición GET al backend
+   * @param endpoint - Ruta del endpoint
+   */
+  async get(endpoint: string): Promise<any> {
+    try {
+      const response = await fetch(`${API_URL}${endpoint}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Error en GET:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Hacer petición POST al backend
+   * @param endpoint - Ruta del endpoint
+   * @param data - Datos a enviar
+   */
+  async post(endpoint: string, data: any): Promise<any> {
+    try {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error en POST:', error);
+      throw error;
+    }
   }
 }
 
