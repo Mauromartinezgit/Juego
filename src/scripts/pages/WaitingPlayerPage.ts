@@ -14,7 +14,7 @@ export class WaitingPlayerPage implements PageController {
 
         const currentState = state.getState();
         const playerName = currentState.playerName || 'Jugador 1';
-        const opponentName = currentState.opponentName || 'Paula';
+        const opponentName = currentState.opponentName || 'Esperando al oponente...';
         const roomCode = currentState.roomCode || '---';
 
         app.innerHTML = `
@@ -77,6 +77,14 @@ export class WaitingPlayerPage implements PageController {
 
                 if (data.players.length === 2) {
                     console.log('Ambos jugadores están listos!');
+
+                    // Actualizar el nombre del oponente en el estado
+                    const currentState = state.getState();
+                    const opponent = data.players.find((player: any) => player.name !== currentState.playerName);
+                    if (opponent) {
+                        state.setState({ ...currentState, opponentName: opponent.name });
+                    }
+
                     if (this.pollingIntervalId) {
                         clearInterval(this.pollingIntervalId);
                         this.pollingIntervalId = null;
