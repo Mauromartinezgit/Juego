@@ -63,14 +63,7 @@ export class WaitingPlayerPage implements PageController {
     }
 
     private startWaitingSimulation(): void {
-        // Simular que después de 3 segundos el otro jugador presiona jugar
-        this.timeoutId = setTimeout(() => {
-            console.log('El otro jugador está listo!');
-            // Navegar a la pantalla de juego
-            void router.navigate('game-playing3');
-        }, 3000);
-
-        // Polling para verificar el estado de la sala
+        // Iniciar el polling para verificar el estado de la sala
         this.pollRoomStatus();
     }
 
