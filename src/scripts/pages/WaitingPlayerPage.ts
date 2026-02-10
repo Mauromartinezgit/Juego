@@ -75,23 +75,25 @@ export class WaitingPlayerPage implements PageController {
                 const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
                 const data = await response.json();
 
-                if (data.players.length === 2) {
-                    console.log('Ambos jugadores están listos!');
-
-                    // Actualizar el nombre del oponente en el estado
+                const app = document.getElementById('app');
+                if (app) {
                     const currentState = state.getState();
-                    const opponent = data.players.find((player: any) => player.name !== currentState.playerName);
-                    if (opponent) {
-                        state.setState({ ...currentState, opponentName: opponent.name });
-                    }
+                    const players = data.players;
 
-                    if (this.pollingIntervalId) {
-                        clearInterval(this.pollingIntervalId);
-                        this.pollingIntervalId = null;
-                    }
+                    // Validar que los datos sean correctos antes de actualizar el estado
+                    if (Array.isArray(players)) {
+                        // Actualizar el estado dinámicamente sin incluir `players` directamente
+                        state.setState({
+                            ...currentState,
+                            opponentName: players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...'
+                        });
 
-                    // Navegar a la pantalla de juego
-                    void router.navigate('game-playing3');
+                        // Actualizar la interfaz con los datos recibidos
+                        app.querySelector('.player-name-highlight')!.textContent = players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...';
+                        app.querySelector('.room-value')!.textContent = currentState.roomCode || '---';
+                    } else {
+                        console.error('Los datos de jugadores no son válidos:', players);
+                    }
                 }
             } catch (error) {
                 console.error('Error al verificar el estado de la sala:', error);

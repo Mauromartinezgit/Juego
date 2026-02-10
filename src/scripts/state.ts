@@ -24,7 +24,8 @@ class State {
     playerChoice: null,    // Última elección del jugador (piedra, papel o tijera)
     computerChoice: null,  // Última elección de la computadora
     roundResult: null,     // Resultado de la última ronda (win, lose, draw)
-    maxScore: 5            // Puntos necesarios para ganar el juego
+    maxScore: 5,            // Puntos necesarios para ganar el juego
+    players: [],           // Lista de jugadores en la sala
   };
 
   /**

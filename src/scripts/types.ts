@@ -32,6 +32,7 @@ export interface GameState {
   computerChoice: Choice | null;
   roundResult: RoundResult | null;
   maxScore: number;
+  players: string[]; // Lista de jugadores en la sala
 }
 
 // Interface para páginas
