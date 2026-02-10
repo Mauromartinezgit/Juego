@@ -313,3 +313,6 @@ class State {
 
 // Exportar una instancia única del estado para usar en toda la aplicación
 export const state = new State();
+
+// Exportar la constante API_URL para que pueda ser utilizada en otros archivos
+export { API_URL };

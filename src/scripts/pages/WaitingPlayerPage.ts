@@ -1,10 +1,12 @@
 import { PageController } from '../types';
 import { router } from '../router';
 import { state } from '../state';
+import { API_URL } from "../state";
 
 export class WaitingPlayerPage implements PageController {
     private checkInterval: number | null = null;
     private timeoutId: any = null;
+    private pollingIntervalId: ReturnType<typeof setInterval> | null = null;
 
     async render(): Promise<void> {
         const app = document.getElementById('app');
@@ -67,6 +69,33 @@ export class WaitingPlayerPage implements PageController {
             // Navegar a la pantalla de juego
             void router.navigate('game-playing3');
         }, 3000);
+
+        // Polling para verificar el estado de la sala
+        this.pollRoomStatus();
+    }
+
+    private pollRoomStatus(): void {
+        const { roomCode } = state.getState();
+
+        this.pollingIntervalId = setInterval(async () => {
+            try {
+                const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
+                const data = await response.json();
+
+                if (data.players.length === 2) {
+                    console.log('Ambos jugadores están listos!');
+                    if (this.pollingIntervalId) {
+                        clearInterval(this.pollingIntervalId);
+                        this.pollingIntervalId = null;
+                    }
+
+                    // Navegar a la pantalla de juego
+                    void router.navigate('game-playing3');
+                }
+            } catch (error) {
+                console.error('Error al verificar el estado de la sala:', error);
+            }
+        }, 3000); // Consultar cada 3 segundos
     }
 
     destroy(): void {
@@ -75,5 +104,15 @@ export class WaitingPlayerPage implements PageController {
             clearTimeout(this.timeoutId);
             this.timeoutId = null;
         }
+
+        // Limpiar el intervalo de polling si existe
+        if (this.pollingIntervalId) {
+            clearInterval(this.pollingIntervalId);
+            this.pollingIntervalId = null;
+        }
+    }
+
+    connectedCallback(): void {
+        this.pollRoomStatus();
     }
 }
