@@ -15,6 +15,7 @@ export class ShareRoomPage implements PageController {
         try {
             roomCode = await state.createRoom(playerName);
             state.setRoomCode(roomCode);
+            console.log('✅ playerId guardado:', state.getState().playerId); 
         } catch (error) {
             console.error('Error al crear la sala:', error);
             roomCode = 'ERROR';

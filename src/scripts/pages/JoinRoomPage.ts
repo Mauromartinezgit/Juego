@@ -40,14 +40,12 @@ export class JoinRoomPage implements PageController {
         joinBtn?.addEventListener('click', async () => {
             const roomCode = roomCodeInput.value.trim().toUpperCase();
 
-            // Validaciones
             if (!roomCode || roomCode.length !== 6) {
                 errorMessage.textContent = 'Ingresa un código de 6 caracteres';
                 errorMessage.style.display = 'block';
                 return;
             }
 
-            // Intentar unirse
             try {
                 errorMessage.style.display = 'none';
                 (joinBtn as HTMLButtonElement).textContent = 'Uniéndose...';
@@ -55,7 +53,8 @@ export class JoinRoomPage implements PageController {
 
                 await state.joinRoom(roomCode, playerName);
                 
-                // Navegar a la pantalla de espera
+                console.log('✅ playerId guardado:', state.getState().playerId); // ← LOG AGREGADO
+                
                 void router.navigate('waiting-player');
             } catch (error) {
                 console.error('Error al unirse:', error);
