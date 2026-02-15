@@ -50,8 +50,25 @@ export class MultiplayerInstructionsPage implements PageController {
 </div>
         `;
 
-        app.querySelector('#multi-play-btn')?.addEventListener('click', () => {
-            void router.navigate('waiting-player');
+        app.querySelector('#multi-play-btn')?.addEventListener('click', async () => {
+            const currentState = state.getState();
+            const { roomCode, playerId } = currentState;
+            
+            if (!roomCode || !playerId) {
+                console.error('❌ roomCode o playerId no definidos');
+                return;
+            }
+            
+            try {
+                // Marcar jugador como listo
+                await state.setPlayerReady(roomCode, playerId);
+                console.log('✅ Jugador marcado como listo');
+                
+                // Ir a waiting-player para esperar al otro
+                void router.navigate('waiting-player');
+            } catch (error) {
+                console.error('❌ Error al marcar como listo:', error);
+            }
         });
 
         // Configurar botón de jugar
