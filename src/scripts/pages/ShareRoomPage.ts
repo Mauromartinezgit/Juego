@@ -10,11 +10,10 @@ export class ShareRoomPage implements PageController {
         const currentState = state.getState();
         const playerName = currentState.playerName || 'Jugador 1';
 
-        // ✅ CREAR SALA EN EL BACKEND (en lugar de generar código local)
+        // Crear sala en el backend
         let roomCode = '';
         try {
-            const result = await state.createRoom(playerName);
-            roomCode = result.roomId;
+            roomCode = await state.createRoom(playerName);
             state.setRoomCode(roomCode);
         } catch (error) {
             console.error('Error al crear la sala:', error);
@@ -61,7 +60,4 @@ export class ShareRoomPage implements PageController {
 
         console.log('Sala creada en el backend:', roomCode);
     }
-
-    // ❌ Ya no necesitas este método
-    // private generateRoomCode(): string { ... }
 }
