@@ -67,40 +67,54 @@ export class WaitingPlayerPage implements PageController {
         this.pollRoomStatus();
     }
 
-    private pollRoomStatus(): void {
-        const { roomCode } = state.getState();
+ private pollRoomStatus(): void {
+    const { roomCode } = state.getState();
 
-        this.pollingIntervalId = setInterval(async () => {
-            try {
-                const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
-                const data = await response.json();
+    this.pollingIntervalId = setInterval(async () => {
+        try {
+            const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
+            const data = await response.json();
 
+            const players = data.players;
+
+            // Validar que haya 2 jugadores
+            if (Array.isArray(players) && players.length === 2 && data.isReady) {
+                console.log('✅ Ambos jugadores están listos!');
+                
+                // Detener el polling
+                if (this.pollingIntervalId) {
+                    clearInterval(this.pollingIntervalId);
+                    this.pollingIntervalId = null;
+                }
+
+                // Actualizar el nombre del oponente
+                const currentState = state.getState();
+                const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name;
+                
+                if (opponentName) {
+                    state.setOpponentName(opponentName);
+                }
+
+                // Navegar al juego
+                void router.navigate('game-playing3');
+            } else {
+                // Actualizar el nombre del oponente en la UI
                 const app = document.getElementById('app');
-                if (app) {
+                if (app && Array.isArray(players)) {
                     const currentState = state.getState();
-                    const players = data.players;
-
-                    // Validar que los datos sean correctos antes de actualizar el estado
-                    if (Array.isArray(players)) {
-                        // Actualizar el estado dinámicamente sin incluir `players` directamente
-                        state.setState({
-                            ...currentState,
-                            opponentName: players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...'
-                        });
-
-                        // Actualizar la interfaz con los datos recibidos
-                        app.querySelector('.player-name-highlight')!.textContent = players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...';
-                        app.querySelector('.room-value')!.textContent = currentState.roomCode || '---';
-                    } else {
-                        console.error('Los datos de jugadores no son válidos:', players);
+                    const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...';
+                    
+                    const nameElement = app.querySelector('.player-name-highlight');
+                    if (nameElement) {
+                        nameElement.textContent = opponentName;
                     }
                 }
-            } catch (error) {
-                console.error('Error al verificar el estado de la sala:', error);
             }
-        }, 3000); // Consultar cada 3 segundos
-    }
-
+        } catch (error) {
+            console.error('Error al verificar el estado de la sala:', error);
+        }
+    }, 3000);
+}
     destroy(): void {
         // Limpiar el timeout si existe
         if (this.timeoutId) {
