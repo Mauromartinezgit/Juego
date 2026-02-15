@@ -62,6 +62,11 @@ class Router {
           const empezarMod = await import('./pages/Empezar');
           PageController = empezarMod.EmpezarPage;
           break;
+     case 'join-room':
+  // Página para ingresar código de sala
+  const joinRoomMod = await import('./pages/JoinRoomPage');
+  PageController = joinRoomMod.JoinRoomPage;
+  break;
         case 'share-room':
           // Página para compartir el código de la sala
           const shareRoomMod = await import('./pages/ShareRoomPage');

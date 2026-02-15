@@ -4,11 +4,14 @@ export type Choice = 'piedra' | 'papel' | 'tijera';
 // Resultado de una ronda
 export type RoundResult = 'win' | 'lose' | 'draw';
 
-// Páginas de la aplicación
+
+
+// Estado del juego
 export type Page =
   | 'welcome'
   | 'instructions'
   | 'empezar'
+  | 'join-room'
   | 'share-room'
   | 'multiplayer-instructions'
   | 'waiting-player'
@@ -18,22 +21,6 @@ export type Page =
   | 'game-round-result'
   | 'win'
   | 'lose';
-
-// Estado del juego
-export interface GameState {
-  playerScore: number;
-  computerScore: number;
-  playerName?: string;
-  opponentName?: string;
-  roomCode?: string;
-  isHost?: boolean;
-  currentPage: Page;
-  playerChoice: Choice | null;
-  computerChoice: Choice | null;
-  roundResult: RoundResult | null;
-  maxScore: number;
-  players: string[]; // Lista de jugadores en la sala
-}
 
 // Interface para páginas
 export interface PageController {
