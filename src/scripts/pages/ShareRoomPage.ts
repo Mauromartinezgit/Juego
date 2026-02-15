@@ -7,12 +7,19 @@ export class ShareRoomPage implements PageController {
         const app = document.getElementById('app');
         if (!app) return;
 
-        // Generar código de sala aleatorio y guardarlo
-        const roomCode = this.generateRoomCode();
-        state.setRoomCode(roomCode);
-
         const currentState = state.getState();
         const playerName = currentState.playerName || 'Jugador 1';
+
+        // ✅ CREAR SALA EN EL BACKEND (en lugar de generar código local)
+        let roomCode = '';
+        try {
+            const result = await state.createRoom(playerName);
+            roomCode = result.roomId;
+            state.setRoomCode(roomCode);
+        } catch (error) {
+            console.error('Error al crear la sala:', error);
+            roomCode = 'ERROR';
+        }
 
         app.innerHTML = `
 <div class="share-room-page">
@@ -52,15 +59,9 @@ export class ShareRoomPage implements PageController {
             void router.navigate('multiplayer-instructions');
         });
 
-        console.log('Sala creada:', roomCode);
+        console.log('Sala creada en el backend:', roomCode);
     }
 
-    private generateRoomCode(): string {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let code = '';
-        for (let i = 0; i < 6; i++) {
-            code += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-        return code;
-    }
+    // ❌ Ya no necesitas este método
+    // private generateRoomCode(): string { ... }
 }
