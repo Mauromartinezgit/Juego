@@ -44,7 +44,7 @@ export class EmpezarPage implements PageController {
             if (currentState.isHost) {
                 void router.navigate('share-room');
             } else {
-                void router.navigate('instructions');
+                void router.navigate('join-room');
             }
         });
 
