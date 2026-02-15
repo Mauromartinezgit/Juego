@@ -57,72 +57,74 @@ export class WaitingPlayerPage implements PageController {
         `;
 
         console.log('Esperando a que el otro jugador presione jugar...');
-
-        // Simular espera (en producción, esto sería una conexión WebSocket/Firebase)
         this.startWaitingSimulation();
     }
 
     private startWaitingSimulation(): void {
-        // Iniciar el polling para verificar el estado de la sala
         this.pollRoomStatus();
     }
 
- private pollRoomStatus(): void {
-    const { roomCode } = state.getState();
+    private pollRoomStatus(): void {
+        const { roomCode } = state.getState();
 
-    this.pollingIntervalId = setInterval(async () => {
-        try {
-            const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
-            const data = await response.json();
+        this.pollingIntervalId = setInterval(async () => {
+            try {
+                const response = await fetch(`${API_URL}/rooms/${roomCode}/status`);
+                const data = await response.json();
 
-            const players = data.players;
+                console.log('📊 Estado de la sala:', data);
 
-            // Validar que haya 2 jugadores
-            if (Array.isArray(players) && players.length === 2 && data.isReady) {
-                console.log('✅ Ambos jugadores están listos!');
-                
-                // Detener el polling
-                if (this.pollingIntervalId) {
-                    clearInterval(this.pollingIntervalId);
-                    this.pollingIntervalId = null;
-                }
+                const players = data.players;
 
-                // Actualizar el nombre del oponente
-                const currentState = state.getState();
-                const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name;
-                
-                if (opponentName) {
-                    state.setOpponentName(opponentName);
-                }
-
-                // Navegar al juego
-                void router.navigate('game-playing3');
-            } else {
-                // Actualizar el nombre del oponente en la UI
-                const app = document.getElementById('app');
-                if (app && Array.isArray(players)) {
-                    const currentState = state.getState();
-                    const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...';
+                if (Array.isArray(players) && players.length === 2 && data.isReady) {
+                    console.log('✅ Ambos jugadores están listos!');
                     
-                    const nameElement = app.querySelector('.player-name-highlight');
-                    if (nameElement) {
-                        nameElement.textContent = opponentName;
+                    if (this.pollingIntervalId) {
+                        clearInterval(this.pollingIntervalId);
+                        this.pollingIntervalId = null;
+                    }
+
+                    const currentState = state.getState();
+                    const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name;
+                    
+                    if (opponentName) {
+                        state.setOpponentName(opponentName);
+                    }
+
+                    void router.navigate('game-playing3');
+                } else {
+                    console.log('👥 Jugadores en sala:', players.length);
+                    
+                    const app = document.getElementById('app');
+                    if (app && Array.isArray(players)) {
+                        const currentState = state.getState();
+                        const opponentName = players.find((player: any) => player.name !== currentState.playerName)?.name || 'Esperando al oponente...';
+                        
+                        console.log('Oponente detectado:', opponentName);
+                        
+                        const nameElement = app.querySelector('.player-name-highlight');
+                        if (nameElement) {
+                            nameElement.textContent = opponentName;
+                        }
+                        
+                        const scoreItems = app.querySelectorAll('.score-item .player-name');
+                        if (scoreItems.length >= 2) {
+                            scoreItems[1].textContent = opponentName + ':';
+                        }
                     }
                 }
+            } catch (error) {
+                console.error('Error al verificar el estado de la sala:', error);
             }
-        } catch (error) {
-            console.error('Error al verificar el estado de la sala:', error);
-        }
-    }, 3000);
-}
+        }, 3000);
+    }
+
     destroy(): void {
-        // Limpiar el timeout si existe
         if (this.timeoutId) {
             clearTimeout(this.timeoutId);
             this.timeoutId = null;
         }
 
-        // Limpiar el intervalo de polling si existe
         if (this.pollingIntervalId) {
             clearInterval(this.pollingIntervalId);
             this.pollingIntervalId = null;
