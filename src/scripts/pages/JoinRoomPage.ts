@@ -52,10 +52,10 @@ export class JoinRoomPage implements PageController {
                 (joinBtn as HTMLButtonElement).disabled = true;
 
                 await state.joinRoom(roomCode, playerName);
-                
-                console.log('✅ playerId guardado:', state.getState().playerId); // ← LOG AGREGADO
-                
-                void router.navigate('waiting-player');
+
+                console.log('✅ playerId guardado:', state.getState().playerId);
+
+                void router.navigate('multiplayer-instructions'); 
             } catch (error) {
                 console.error('Error al unirse:', error);
                 errorMessage.textContent = 'No se pudo unir a la sala. Verifica el código.';
