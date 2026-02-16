@@ -1,6 +1,5 @@
 import { PageController } from '../types';
 import { state } from '../state';
-import { Button } from '../components/Button';
 import { router } from '../router';
 
 export class LosePage implements PageController {
@@ -39,7 +38,7 @@ export class LosePage implements PageController {
     </div>
 
     <div class="result-actions">
-      <button class="btn btn-primary" data-page="instructions" id="play-again-lose">Volver a Jugar</button>
+      <button class="btn btn-primary" id="play-again-lose">Volver a Jugar</button>
     </div>
   </div>
 </div>
@@ -62,7 +61,7 @@ export class LosePage implements PageController {
     }
   }
 
-private setupButtons(): void {
+  private setupButtons(): void {
     const playAgainBtn = document.getElementById('play-again-lose');
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
@@ -70,7 +69,5 @@ private setupButtons(): void {
         void router.navigate('welcome');
       });
     }
-
-    
   }
 }
