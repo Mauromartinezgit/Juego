@@ -1,6 +1,7 @@
 import { PageController } from '../types';
 import { state } from '../state';
 import { Button } from '../components/Button';
+import { router } from '../router';
 
 export class LosePage implements PageController {
   async render(): Promise<void> {
@@ -61,14 +62,15 @@ export class LosePage implements PageController {
     }
   }
 
-  private setupButtons(): void {
+private setupButtons(): void {
     const playAgainBtn = document.getElementById('play-again-lose');
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
         state.resetScore();
+        void router.navigate('welcome');
       });
     }
 
-    Button.setupNavigationButtons();
+    
   }
 }
