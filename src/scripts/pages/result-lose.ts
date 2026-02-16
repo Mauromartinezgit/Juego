@@ -5,11 +5,12 @@ import { Button } from '../components/Button';
 export class LosePage implements PageController {
   async render(): Promise<void> {
     const gameState = state.getState();
+    const playerName = gameState.playerName || 'Jugador';
+    const opponentName = gameState.opponentName || 'Oponente';
 
     const app = document.getElementById('app');
     if (!app) return;
 
-    // Set HTML content directly
     app.innerHTML = `
 <div class="result-page lose-page">
   <div class="result-header">
@@ -19,18 +20,18 @@ export class LosePage implements PageController {
   <div class="result-container">
     <div class="result-star">
       <div class="star-shape"></div>
-      <div class="result-star-text">Perdiste</div>
+      <div class="result-star-text">¡${opponentName} Ganó!</div>
     </div>
 
     <div class="score-card">
       <h2 class="score-card-title">Score</h2>
       <div class="score-display">
         <div class="score-row">
-          <span class="score-label">Vos:</span>
+          <span class="score-label">${playerName}:</span>
           <span class="score-number" id="final-player-score-lose">3</span>
         </div>
         <div class="score-row">
-          <span class="score-label">Máquina:</span>
+          <span class="score-label">${opponentName}:</span>
           <span class="score-number" id="final-computer-score-lose">5</span>
         </div>
       </div>
@@ -43,10 +44,7 @@ export class LosePage implements PageController {
 </div>
     `;
 
-    // Update scores
     this.displayFinalScore(gameState.playerScore, gameState.computerScore);
-
-    // Configurar botones
     this.setupButtons();
   }
 
@@ -64,7 +62,6 @@ export class LosePage implements PageController {
   }
 
   private setupButtons(): void {
-    // Botón de jugar de nuevo
     const playAgainBtn = document.getElementById('play-again-lose');
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
@@ -72,7 +69,6 @@ export class LosePage implements PageController {
       });
     }
 
-    // Configurar botones de navegación
     Button.setupNavigationButtons();
   }
 }
