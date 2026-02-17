@@ -7,6 +7,8 @@ export class WinPage implements PageController {
     const gameState = state.getState();
     const playerName = gameState.playerName || 'Jugador';
     const opponentName = gameState.opponentName || 'Oponente';
+    const playerMatches = gameState.playerMatchesWon;
+    const opponentMatches = gameState.opponentMatchesWon;
 
     const app = document.getElementById('app');
     if (!app) return;
@@ -14,7 +16,7 @@ export class WinPage implements PageController {
     app.innerHTML = `
 <div class="result-page win-page">
   <div class="result-header">
-    <h2 class="result-header-title">Resultado</h2>
+    <h2 class="result-header-title">Resultado Final</h2>
   </div>
 
   <div class="result-container">
@@ -24,15 +26,15 @@ export class WinPage implements PageController {
     </div>
 
     <div class="score-card">
-      <h2 class="score-card-title">Score</h2>
+      <h2 class="score-card-title">Partidas</h2>
       <div class="score-display">
         <div class="score-row">
           <span class="score-label">${playerName}:</span>
-          <span class="score-number" id="final-player-score">5</span>
+          <span class="score-number">${playerMatches}</span>
         </div>
         <div class="score-row">
           <span class="score-label">${opponentName}:</span>
-          <span class="score-number" id="final-computer-score">3</span>
+          <span class="score-number">${opponentMatches}</span>
         </div>
       </div>
     </div>
@@ -44,21 +46,7 @@ export class WinPage implements PageController {
 </div>
     `;
 
-    this.displayFinalScore(gameState.playerScore, gameState.computerScore);
     this.setupButtons();
-  }
-
-  private displayFinalScore(playerScore: number, computerScore: number): void {
-    const playerScoreEl = document.getElementById('final-player-score');
-    const computerScoreEl = document.getElementById('final-computer-score');
-
-    if (playerScoreEl) {
-      playerScoreEl.textContent = playerScore.toString();
-    }
-
-    if (computerScoreEl) {
-      computerScoreEl.textContent = computerScore.toString();
-    }
   }
 
   private setupButtons(): void {
@@ -66,6 +54,7 @@ export class WinPage implements PageController {
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
         state.resetScore();
+        state.resetMatches(); // ← Resetea el contador de partidas
         void router.navigate('welcome');
       });
     }
