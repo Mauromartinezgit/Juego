@@ -26,6 +26,8 @@ class State {
     roundResult: null,
     maxScore: 5,
     players: [],
+    playerMatchesWon: 0,
+    opponentMatchesWon: 0,
   };
 
   /**
@@ -120,6 +122,47 @@ class State {
     return null;
   }
 
+  /**
+   * Incrementar partidas ganadas del jugador
+   */
+  incrementPlayerMatches(): void {
+    this.setState({
+      playerMatchesWon: this.state.playerMatchesWon + 1
+    });
+  }
+
+  /**
+   * Incrementar partidas ganadas del oponente
+   */
+  incrementOpponentMatches(): void {
+    this.setState({
+      opponentMatchesWon: this.state.opponentMatchesWon + 1
+    });
+  }
+
+  /**
+   * Resetear contadores de partidas
+   */
+  resetMatches(): void {
+    this.setState({
+      playerMatchesWon: 0,
+      opponentMatchesWon: 0
+    });
+  }
+
+  /**
+   * Verificar si alguien ganó el mejor de 3
+   */
+  checkMatchWinner(): 'player' | 'opponent' | null {
+    if (this.state.playerMatchesWon >= 2) {
+      return 'player';
+    }
+    if (this.state.opponentMatchesWon >= 2) {
+      return 'opponent';
+    }
+    return null;
+  }
+
   // ==========================================
   // MÉTODOS PARA CONECTAR CON EL BACKEND
   // ==========================================
@@ -138,7 +181,7 @@ class State {
 
       this.setPlayerName(playerName);
       this.setRoomCode(data.roomId);
-      this.setState({ playerId: data.playerId }); // ← agregado
+      this.setState({ playerId: data.playerId });
       this.setIsHost(true);
 
       return data.roomId;
@@ -162,7 +205,7 @@ class State {
 
       this.setPlayerName(playerName);
       this.setRoomCode(roomCode);
-      this.setState({ playerId: data.playerId }); // ← agregado
+      this.setState({ playerId: data.playerId });
       this.setIsHost(false);
     } catch (error) {
       console.error('Error al unirse a la sala:', error);

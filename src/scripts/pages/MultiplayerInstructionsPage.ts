@@ -1,5 +1,4 @@
 import { PageController } from '../types';
-import { Button } from '../components/Button';
 import { state } from '../state';
 import { router } from '../router';
 
@@ -12,6 +11,8 @@ export class MultiplayerInstructionsPage implements PageController {
         const playerName = currentState.playerName || 'Jugador 1';
         const opponentName = currentState.opponentName || 'Contrincante';
         const roomCode = currentState.roomCode || '---';
+        const playerMatches = currentState.playerMatchesWon;
+        const opponentMatches = currentState.opponentMatchesWon;
 
         app.innerHTML = `
 <div class="multiplayer-instructions-page">
@@ -23,6 +24,7 @@ export class MultiplayerInstructionsPage implements PageController {
         <div class="room-code">
             <span class="room-label">Sala</span>
             <span class="room-value">${roomCode}</span>
+            <span class="matches-label">Partidas: ${playerMatches}-${opponentMatches}</span>
         </div>
         <div class="score-item">
             <span class="player-name">${opponentName}:</span>
@@ -60,19 +62,13 @@ export class MultiplayerInstructionsPage implements PageController {
             }
             
             try {
-                // Marcar jugador como listo
                 await state.setPlayerReady(roomCode, playerId);
                 console.log('✅ Jugador marcado como listo');
-                
-                // Ir a waiting-player para esperar al otro
                 void router.navigate('waiting-player');
             } catch (error) {
                 console.error('❌ Error al marcar como listo:', error);
             }
         });
-
-        // Configurar botón de jugar
-        Button.setupNavigationButtons();
 
         console.log('Mostrando instrucciones multijugador');
     }

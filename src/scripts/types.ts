@@ -25,7 +25,7 @@ export interface GameState {
   playerScore: number;
   computerScore: number;
   playerName?: string;
-  playerId?: string;        // ← LÍNEA AGREGADA
+  playerId?: string;
   opponentName?: string;
   roomCode?: string;
   isHost?: boolean;
@@ -35,6 +35,8 @@ export interface GameState {
   roundResult: RoundResult | null;
   maxScore: number;
   players: string[];
+  playerMatchesWon: number;      // ← Cambiado de 0 a number
+  opponentMatchesWon: number;    // ← Cambiado de 0 a number
 }
 
 // Interface para páginas
