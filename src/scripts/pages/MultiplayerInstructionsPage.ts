@@ -56,6 +56,13 @@ export class MultiplayerInstructionsPage implements PageController {
             const currentState = state.getState();
             const { roomCode, playerId } = currentState;
             
+            // Si está en modo solo, no debería estar aquí
+            if (currentState.isSoloMode) {
+                console.warn('⚠️ Modo solo detectado en página multijugador, redirigiendo...');
+                void router.navigate('instructions-solo');
+                return;
+            }
+            
             if (!roomCode || !playerId) {
                 console.error('❌ roomCode o playerId no definidos');
                 return;
