@@ -1,40 +1,22 @@
-/**
- * WELCOME PAGE - PÁGINA DE BIENVENIDA
- * Primera página que ve el usuario al abrir el juego
- */
-
 import { PageController } from '../types';
-import { Button } from '../components/Button';
 import { state } from '../state';
+import { router } from '../router';
 
-/**
- * Clase WelcomePage
- * Controlador de la página de bienvenida
- */
 export class WelcomePage implements PageController {
-  /**
-   * Renderizar la página de bienvenida
-   * Este método se ejecuta cuando el usuario llega a esta página
-   */
   async render(): Promise<void> {
-    // Obtener el elemento contenedor principal de la aplicación
     const app = document.getElementById('app');
-    if (!app) return; // Si no existe, salir
+    if (!app) return;
 
-    /**
-     * Establecer el contenido HTML de la página
-     */
     app.innerHTML = `
 <div class="page-welcome">
     <div class="container page-welcome">
         <div class="container-title">
-        <h1 class="title">Piedra,<br>Papel o <br>Tijera</h1>
+            <h1 class="title">Piedra,<br>Papel o <br>Tijera</h1>
         </div>
         <div class="container-button">
-        <button class="button" data-page="empezar" id="new-game">Nuevo Juego</button>
-        </div>
-        <div class="container-button">
-        <button class="button" data-page="empezar" id="join-room">Ingresar a una sala</button>
+            <button class="button" id="solo-btn">Jugar Solo</button>
+            <button class="button" id="create-room-btn" style="margin-top: 10px;">Crear Sala</button>
+            <button class="button" id="join-room-btn" style="margin-top: 10px;">Unirse a Sala</button>
         </div>
         <div class="container-hands">
             <img src="https://i.postimg.cc/RVBNKXfK/tijera.png" class="img-hands" alt="tijera">
@@ -45,16 +27,22 @@ export class WelcomePage implements PageController {
 </div>
     `;
 
-    // Configurar el estado según el botón presionado
-    app.querySelector('#new-game')?.addEventListener('click', () => {
-      state.setIsHost(true);
-    });
-
-    app.querySelector('#join-room')?.addEventListener('click', () => {
+    // Botón JUGAR SOLO
+    app.querySelector('#solo-btn')?.addEventListener('click', () => {
       state.setIsHost(false);
+      void router.navigate('instructions');
     });
 
-    // Configurar los botones de navegación
-    Button.setupNavigationButtons();
+    // Botón CREAR SALA (multijugador)
+    app.querySelector('#create-room-btn')?.addEventListener('click', () => {
+      state.setIsHost(true);
+      void router.navigate('empezar');
+    });
+
+    // Botón UNIRSE A SALA (multijugador)
+    app.querySelector('#join-room-btn')?.addEventListener('click', () => {
+      state.setIsHost(false);
+      void router.navigate('empezar');
+    });
   }
 }
