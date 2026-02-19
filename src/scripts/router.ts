@@ -117,6 +117,10 @@ class Router {
           const loseMod = await import('./pages/result-lose');
           PageController = loseMod.LosePage;
           break;
+        case 'instructions-solo':
+         const instructionsSoloMod = await import('./pages/InstructionsSolo');
+          PageController = instructionsSoloMod.InstructionsSoloPage;
+          break;
       }
 
       // Si se cargó un controlador, crear una instancia y renderizar la página

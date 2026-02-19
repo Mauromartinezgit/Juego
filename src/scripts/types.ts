@@ -8,6 +8,7 @@ export type RoundResult = 'win' | 'lose' | 'draw';
 export type Page =
   | 'welcome'
   | 'instructions'
+  | 'instructions-solo'
   | 'empezar'
   | 'join-room'
   | 'share-room'

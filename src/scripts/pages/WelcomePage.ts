@@ -15,8 +15,12 @@ export class WelcomePage implements PageController {
         </div>
         <div class="container-button">
             <button class="button" id="solo-btn">Jugar Solo</button>
-            <button class="button" id="create-room-btn" style="margin-top: 10px;">Crear Sala</button>
-            <button class="button" id="join-room-btn" style="margin-top: 10px;">Unirse a Sala</button>
+        </div>
+        <div class="container-button">
+            <button class="button" id="new-game">Nuevo Juego</button>
+        </div>
+        <div class="container-button">
+            <button class="button" id="join-room">Ingresar a una sala</button>
         </div>
         <div class="container-hands">
             <img src="https://i.postimg.cc/RVBNKXfK/tijera.png" class="img-hands" alt="tijera">
@@ -27,20 +31,19 @@ export class WelcomePage implements PageController {
 </div>
     `;
 
-    // Botón JUGAR SOLO
+    // Botón JUGAR SOLO (contra la máquina)
     app.querySelector('#solo-btn')?.addEventListener('click', () => {
-      state.setIsHost(false);
-      void router.navigate('instructions');
+      void router.navigate('instructions-solo');
     });
 
-    // Botón CREAR SALA (multijugador)
-    app.querySelector('#create-room-btn')?.addEventListener('click', () => {
+    // Botón NUEVO JUEGO (crear sala multijugador)
+    app.querySelector('#new-game')?.addEventListener('click', () => {
       state.setIsHost(true);
       void router.navigate('empezar');
     });
 
-    // Botón UNIRSE A SALA (multijugador)
-    app.querySelector('#join-room-btn')?.addEventListener('click', () => {
+    // Botón INGRESAR A UNA SALA (unirse multijugador)
+    app.querySelector('#join-room')?.addEventListener('click', () => {
       state.setIsHost(false);
       void router.navigate('empezar');
     });
