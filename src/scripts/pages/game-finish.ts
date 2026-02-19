@@ -78,37 +78,39 @@ export class GameRoundResultPage implements PageController {
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
         const winner = state.checkWinner();
+        const currentState = state.getState();
 
         if (winner === 'player') {
-          // Jugador ganó esta partida
           state.incrementPlayerMatches();
           
-          // Verificar si ganó el mejor de 3
           const matchWinner = state.checkMatchWinner();
           if (matchWinner === 'player') {
-            // Ganó el mejor de 3, ir a victoria final
             router.navigate('win');
           } else {
-            // Continuar con siguiente partida
             state.resetScore();
-            router.navigate('multiplayer-instructions');
+            
+            if (currentState.isSoloMode) {
+              router.navigate('instructions-solo');
+            } else {
+              router.navigate('multiplayer-instructions');
+            }
           }
         } else if (winner === 'computer') {
-          // Oponente ganó esta partida
           state.incrementOpponentMatches();
           
-          // Verificar si ganó el mejor de 3
           const matchWinner = state.checkMatchWinner();
           if (matchWinner === 'opponent') {
-            // Ganó el mejor de 3, ir a derrota final
             router.navigate('lose');
           } else {
-            // Continuar con siguiente partida
             state.resetScore();
-            router.navigate('multiplayer-instructions');
+            
+            if (currentState.isSoloMode) {
+              router.navigate('instructions-solo');
+            } else {
+              router.navigate('multiplayer-instructions');
+            }
           }
         } else {
-          // Nadie llegó a 5 puntos, continuar jugando
           router.navigate('game-playing3');
         }
       });
