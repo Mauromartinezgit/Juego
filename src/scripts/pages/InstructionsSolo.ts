@@ -28,6 +28,7 @@ export class InstructionsSoloPage implements PageController {
     `;
 
     app.querySelector('#play-btn')?.addEventListener('click', () => {
+      state.setSoloMode(true);
       void router.navigate('game-playing3');
     });
   }

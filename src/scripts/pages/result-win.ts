@@ -53,9 +53,15 @@ export class WinPage implements PageController {
     const playAgainBtn = document.getElementById('play-again-win');
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
+        const currentState = state.getState();
         state.resetScore();
-        state.resetMatches(); // ← Resetea el contador de partidas
-        void router.navigate('welcome');
+        state.resetMatches();
+        
+        if (currentState.isSoloMode) {
+          void router.navigate('instructions-solo');
+        } else {
+          void router.navigate('welcome');
+        }
       });
     }
   }

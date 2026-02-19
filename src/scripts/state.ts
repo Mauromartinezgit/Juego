@@ -28,6 +28,7 @@ class State {
     players: [],
     playerMatchesWon: 0,
     opponentMatchesWon: 0,
+    isSoloMode: false,
   };
 
   /**
@@ -111,6 +112,9 @@ class State {
   setOpponentName(name: string): void {
     this.setState({ opponentName: name });
   }
+  setSoloMode(isSolo: boolean): void {
+  this.setState({ isSoloMode: isSolo });
+}
 
   checkWinner(): 'player' | 'computer' | null {
     if (this.state.playerScore >= this.state.maxScore) {

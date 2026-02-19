@@ -36,8 +36,9 @@ export interface GameState {
   roundResult: RoundResult | null;
   maxScore: number;
   players: string[];
-  playerMatchesWon: number;      // ← Cambiado de 0 a number
-  opponentMatchesWon: number;    // ← Cambiado de 0 a number
+  playerMatchesWon: number;     
+  opponentMatchesWon: number;
+  isSoloMode: boolean;     
 }
 
 // Interface para páginas

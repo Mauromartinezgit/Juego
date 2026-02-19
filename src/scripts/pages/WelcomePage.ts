@@ -17,10 +17,10 @@ export class WelcomePage implements PageController {
             <button class="button" id="solo-btn">Jugar Solo</button>
         </div>
         <div class="container-button">
-            <button class="button" id="new-game">Nuevo Juego</button>
+            <button class="button" id="new-game">Jugar Multijugador</button>
         </div>
         <div class="container-button">
-            <button class="button" id="join-room">Ingresar a una sala</button>
+            <button class="button" id="join-room">Ingresar a una sala Multijuador </button>
         </div>
         <div class="container-hands">
             <img src="https://i.postimg.cc/RVBNKXfK/tijera.png" class="img-hands" alt="tijera">
