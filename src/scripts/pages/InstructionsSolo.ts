@@ -9,11 +9,16 @@ export class InstructionsSoloPage implements PageController {
     const app = document.getElementById('app');
     if (!app) return;
 
+    const currentState = state.getState();
+    const playerMatches = currentState.playerMatchesWon;
+    const opponentMatches = currentState.opponentMatchesWon;
+
     app.innerHTML = `
 <div class="page-instructions">
     <div class="container">
         <div class="container-title">
             <h1 class="title">Presioná jugar<br>y elegí: piedra,<br>papel o tijera<br>antes de que pasen<br>los 3 segundos.</h1>
+            <p class="matches-counter" style="font-size: 24px; color: #009048; margin-top: 20px;">Partidas: ${playerMatches} - ${opponentMatches}</p>
         </div>
         <div class="container-button">
             <button class="button" id="play-btn">¡Jugar!</button>

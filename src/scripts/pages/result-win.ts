@@ -40,7 +40,8 @@ export class WinPage implements PageController {
     </div>
 
     <div class="result-actions">
-      <button class="btn btn-primary" id="play-again-win">Volver a Jugar</button>
+      <button class="btn btn-primary" id="play-again-win" style="margin-bottom: 10px;">Volver a Jugar</button>
+      <button class="btn btn-secondary" id="menu-btn-win">Menú Principal</button>
     </div>
   </div>
 </div>
@@ -51,6 +52,8 @@ export class WinPage implements PageController {
 
   private setupButtons(): void {
     const playAgainBtn = document.getElementById('play-again-win');
+    const menuBtn = document.getElementById('menu-btn-win');
+    
     if (playAgainBtn) {
       playAgainBtn.addEventListener('click', () => {
         const currentState = state.getState();
@@ -62,6 +65,15 @@ export class WinPage implements PageController {
         } else {
           void router.navigate('welcome');
         }
+      });
+    }
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        state.resetScore();
+        state.resetMatches();
+        state.setSoloMode(false);
+        void router.navigate('welcome');
       });
     }
   }
