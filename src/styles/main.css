@@ -10,6 +10,7 @@
 @import './share-room.css';
 @import './multiplayer-instructions.css';
 @import './waiting-player.css';
+@import './instructionsSolo.css'; 
 
 /* Reset básico */
 * {
